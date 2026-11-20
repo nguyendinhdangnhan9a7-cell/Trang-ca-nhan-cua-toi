@@ -1,0 +1,546 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thư Viện Số | Đăng Nhân</title>
+
+<style>
+:root {
+  --main: #f36b21;
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --text: #202b3c;
+  --sub: #718096;
+  --border: #e5e9f0;
+}
+
+body.dark {
+  --bg: #101827;
+  --card: #1b2739;
+  --text: #f1f5f9;
+  --sub: #a6b3c5;
+  --border: #334155;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: .4s;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--card);
+  padding: 16px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 3px 15px #00000010;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: bold;
+  color: var(--main);
+}
+
+nav a {
+  color: var(--text);
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 14px;
+  transition: .3s;
+}
+
+nav a:hover {
+  color: var(--main);
+}
+
+button {
+  border: none;
+  padding: 11px 17px;
+  border-radius: 9px;
+  background: var(--main);
+  color: white;
+  cursor: pointer;
+  transition: .3s;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px #f36b2155;
+}
+
+section {
+  padding: 100px 8%;
+  scroll-margin-top: 65px;
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background:
+    radial-gradient(circle at 80% 20%, #f36b2222, transparent 35%),
+    var(--bg);
+}
+
+.hero h1 {
+  font-size: clamp(35px, 6vw, 65px);
+  margin-bottom: 20px;
+}
+
+.hero h1 span {
+  color: var(--main);
+}
+
+.hero p {
+  color: var(--sub);
+  font-size: 18px;
+  line-height: 1.8;
+  max-width: 650px;
+}
+
+.profile {
+  margin-top: 30px;
+  padding: 20px 35px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  line-height: 2;
+}
+
+.title {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.description {
+  color: var(--sub);
+  margin-bottom: 30px;
+  line-height: 1.7;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 22px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 25px;
+  transition: .35s;
+}
+
+.card:hover {
+  transform: translateY(-9px);
+  border-color: var(--main);
+  box-shadow: 0 12px 30px #00000012;
+}
+
+.icon {
+  font-size: 35px;
+  margin-bottom: 15px;
+}
+
+.card h3 {
+  margin-bottom: 12px;
+}
+
+.card p {
+  color: var(--sub);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.card a {
+  display: inline-block;
+  margin-top: 18px;
+  color: var(--main);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.info {
+  background: var(--card);
+  padding: 30px;
+  border-radius: 15px;
+  border-left: 5px solid var(--main);
+  line-height: 2;
+}
+
+.search {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  margin-bottom: 25px;
+  outline: none;
+}
+
+.search:focus {
+  border-color: var(--main);
+}
+
+footer {
+  text-align: center;
+  padding: 35px;
+  background: var(--card);
+  color: var(--sub);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: .8s;
+}
+
+.reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.top {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
+}
+
+@media(max-width: 850px) {
+  nav {
+    display: none;
+  }
+  section {
+    padding: 90px 6%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">📚 DIGITAL LIBRARY</div>
+
+  <nav>
+    <a href="#home">Trang chủ</a>
+    <a href="#about">Giới thiệu</a>
+    <a href="#library">Thư viện</a>
+    <a href="#skills">Kiến thức</a>
+    <a href="#goals">Mục tiêu</a>
+  </nav>
+
+  <button onclick="toggleTheme()" id="themeBtn">
+    🌙
+  </button>
+</header>
+
+<!-- TRANG CHỦ -->
+<section class="hero" id="home">
+  <h1>CHÀO MỪNG ĐẾN VỚI<br>
+    <span>THƯ VIỆN SỐ CÁ NHÂN</span>
+  </h1>
+
+  <p>
+    Không gian lưu trữ kiến thức, tài liệu học tập
+    và hành trình phát triển bản thân của sinh viên FPT.
+  </p>
+
+  <div class="profile">
+    <h3>NGUYỄN ĐÌNH ĐĂNG NHÂN</h3>
+    <p>MSSV: PK04809</p>
+    <p>FPT Polytechnic | Sinh viên năm nhất</p>
+  </div>
+
+  <br>
+  <button onclick="location.href='#library'">
+    Khám phá thư viện →
+  </button>
+</section>
+
+<!-- GIỚI THIỆU -->
+<section id="about" class="reveal">
+  <h2 class="title">👨‍🎓 Giới thiệu bản thân</h2>
+
+  <p class="description">
+    Tôi là Nguyễn Đình Đăng Nhân, sinh viên năm nhất
+    tại FPT Polytechnic. Tôi yêu thích công nghệ,
+    lập trình và khám phá những kiến thức mới.
+    Thư viện số này là nơi tôi lưu trữ tài liệu,
+    tổng hợp kiến thức và theo dõi quá trình học tập.
+  </p>
+
+  <div class="info">
+    <p><b>Họ và tên:</b> Nguyễn Đình Đăng Nhân</p>
+    <p><b>MSSV:</b> PK04809</p>
+    <p><b>Trường:</b> FPT Polytechnic</p>
+    <p><b>Định hướng:</b> Công nghệ thông tin</p>
+    <p><b>Sở thích:</b> Công nghệ, âm nhạc và lập trình</p>
+  </div>
+</section>
+
+<!-- THƯ VIỆN -->
+<section id="library" class="reveal">
+  <h2 class="title">📚 Thư viện tài liệu</h2>
+
+  <p class="description">
+    Tổng hợp những lĩnh vực kiến thức phục vụ học tập
+    và nghiên cứu trong quá trình học tại FPT.
+  </p>
+
+  <input class="search" id="search"
+    placeholder="🔍 Tìm kiếm tài liệu..."
+    oninput="searchCards()">
+
+  <div class="grid" id="libraryGrid">
+
+    <div class="card">
+      <div class="icon">🌐</div>
+      <h3>HTML & CSS</h3>
+      <p>Tìm hiểu cấu trúc website, thẻ HTML,
+      thuộc tính CSS và thiết kế giao diện.</p>
+      <a href="#html">Xem kiến thức →</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">☕</div>
+      <h3>Java</h3>
+      <p>Kiến thức lập trình Java, biến,
+      kiểu dữ liệu, điều kiện và vòng lặp.</p>
+      <a href="#java">Xem kiến thức →</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">🤖</div>
+      <h3>Trí tuệ nhân tạo</h3>
+      <p>Khám phá AI, Machine Learning
+      và ứng dụng trí tuệ nhân tạo.</p>
+      <a href="#ai">Xem kiến thức →</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">🧠</div>
+      <h3>Kỹ năng học tập</h3>
+      <p>Phương pháp tự học, quản lý thời gian
+      và làm việc nhóm hiệu quả.</p>
+      <a href="#skills">Xem kiến thức →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- HTML CSS -->
+<section id="html" class="reveal">
+  <h2 class="title">🌐 HTML & CSS</h2>
+  <p class="description">
+    HTML xây dựng cấu trúc nội dung website,
+    CSS giúp định dạng màu sắc, bố cục và giao diện.
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>HTML cơ bản</h3>
+      <p>DOCTYPE, html, head, body, heading,
+      paragraph, image, link và table.</p>
+    </div>
+
+    <div class="card">
+      <h3>CSS cơ bản</h3>
+      <p>Selector, màu sắc, font chữ,
+      margin, padding và border.</p>
+    </div>
+
+    <div class="card">
+      <h3>Responsive</h3>
+      <p>Thiết kế website tương thích
+      với máy tính, máy tính bảng và điện thoại.</p>
+    </div>
+  </div>
+</section>
+
+<!-- JAVA -->
+<section id="java" class="reveal">
+  <h2 class="title">☕ Lập trình Java</h2>
+
+  <p class="description">
+    Java là ngôn ngữ lập trình hướng đối tượng,
+    được sử dụng rộng rãi trong phát triển phần mềm.
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Biến và kiểu dữ liệu</h3>
+      <p>int, double, float, char, boolean và String.</p>
+    </div>
+
+    <div class="card">
+      <h3>Câu lệnh điều kiện</h3>
+      <p>if, else, else if và switch.</p>
+    </div>
+
+    <div class="card">
+      <h3>Vòng lặp</h3>
+      <p>for, while và do while.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AI -->
+<section id="ai" class="reveal">
+  <h2 class="title">🤖 Trí tuệ nhân tạo AI</h2>
+
+  <p class="description">
+    AI là lĩnh vực công nghệ giúp máy tính thực hiện
+    những nhiệm vụ thường cần đến trí thông minh của con người.
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Artificial Intelligence</h3>
+      <p>Tổng quan về trí tuệ nhân tạo và ứng dụng.</p>
+    </div>
+
+    <div class="card">
+      <h3>Machine Learning</h3>
+      <p>Học máy và khả năng học từ dữ liệu.</p>
+    </div>
+
+    <div class="card">
+      <h3>Ứng dụng AI</h3>
+      <p>Chatbot, nhận diện hình ảnh và hỗ trợ học tập.</p>
+    </div>
+  </div>
+</section>
+
+<!-- KỸ NĂNG -->
+<section id="skills" class="reveal">
+  <h2 class="title">🧠 Kỹ năng học tập</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Quản lý thời gian</h3>
+      <p>Lập kế hoạch học tập và phân chia
+      thời gian hợp lý.</p>
+    </div>
+
+    <div class="card">
+      <h3>Tự học</h3>
+      <p>Chủ động tìm kiếm tài liệu và
+      thực hành kiến thức mới.</p>
+    </div>
+
+    <div class="card">
+      <h3>Làm việc nhóm</h3>
+      <p>Trao đổi ý tưởng, phối hợp
+      và hoàn thành nhiệm vụ chung.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MỤC TIÊU -->
+<section id="goals" class="reveal">
+  <h2 class="title">🎯 Mục tiêu học tập</h2>
+
+  <div class="info">
+    <h3>Trong thời gian học tại FPT Polytechnic</h3>
+
+    <p>✓ Nắm vững kiến thức nền tảng công nghệ thông tin.</p>
+    <p>✓ Thành thạo HTML, CSS và Java cơ bản.</p>
+    <p>✓ Phát triển khả năng tư duy logic.</p>
+    <p>✓ Tạo ra những sản phẩm công nghệ thực tế.</p>
+    <p>✓ Từng bước tiến gần hơn đến mục tiêu trở thành
+    kỹ sư công nghệ và chế tạo robot.</p>
+  </div>
+</section>
+
+<!-- LIÊN HỆ -->
+<section id="contact" class="reveal">
+  <h2 class="title">📩 Thông tin thư viện</h2>
+
+  <div class="info">
+    <p><b>Tác giả:</b> Nguyễn Đình Đăng Nhân</p>
+    <p><b>MSSV:</b> PK04809</p>
+    <p><b>Đơn vị:</b> FPT Polytechnic</p>
+    <p><b>Dự án:</b> Thư viện số cá nhân</p>
+    <p><b>Mục đích:</b> Lưu trữ và hệ thống hóa kiến thức học tập.</p>
+  </div>
+</section>
+
+<footer>
+  <h3>📚 DIGITAL LIBRARY</h3>
+  <p>Thiết kế bởi Nguyễn Đình Đăng Nhân</p>
+  <p>FPT Polytechnic | 2026</p>
+  <p>© Thư viện số cá nhân - All Rights Reserved</p>
+</footer>
+
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  ↑
+</button>
+
+<script>
+// CHẾ ĐỘ SÁNG TỐI
+function toggleTheme() {
+  document.body.classList.toggle("dark");
+
+  const dark = document.body.classList.contains("dark");
+
+  document.getElementById("themeBtn").innerHTML =
+    dark ? "☀️" : "🌙";
+}
+
+// HIỆU ỨNG CUỘN TRANG
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
+    }
+  });
+}, {threshold: 0.12});
+
+document.querySelectorAll(".reveal").forEach(el => {
+  observer.observe(el);
+});
+
+// TÌM KIẾM TÀI LIỆU
+function searchCards() {
+  const keyword = document
+    .getElementById("search")
+    .value.toLowerCase();
+
+  document.querySelectorAll("#libraryGrid .card")
+    .forEach(card => {
+      card.style.display =
+        card.innerText.toLowerCase().includes(keyword)
+        ? "block" : "none";
+    });
+}
+</script>
+
+</body>
+</html>
